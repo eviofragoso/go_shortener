@@ -95,7 +95,7 @@ func shortenedURL(original string) string {
 	return fmt.Sprintf("%v/%v", domain, token)
 }
 
-// GetShortenedURL retrieve shortened url based on original
+// GetShortenedURL retrieve shortened url based on original url
 func serveShortenedURL(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	original := params["url"]
