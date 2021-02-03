@@ -109,6 +109,7 @@ func serveShortenedURL(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(shortenedURL(original))
 }
 
+// Redirects to url
 func redirectToURL(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	hash := params["hash"]
