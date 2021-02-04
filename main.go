@@ -113,6 +113,7 @@ func serveShortenedURL(w http.ResponseWriter, r *http.Request) {
 func redirectToURL(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	hash := params["hash"]
+	// retrieve url from database
 	url := url(hash)
 
 	if url != "" {
@@ -121,6 +122,7 @@ func redirectToURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// check for .env when in development
 	if os.Getenv("GO_ENV") == "" || os.Getenv("GO_ENV") == "development" {
 		err := godotenv.Load()
 
@@ -128,11 +130,13 @@ func main() {
 			log.Fatal("Error loading .env file")
 		}
 	}
-
+	// instantiate router
 	router := mux.NewRouter()
-
+	// define routes
 	router.HandleFunc("/shortener", serveShortenedURL).Queries("url", "{url}").Methods("GET")
 	router.HandleFunc("/{hash}", redirectToURL).Methods("GET")
-
-	log.Fatal(http.ListenAndServe(":8000", router))
+	// define path
+	servePath := fmt.Sprintf(":%v", os.Getenv("PORT"))
+	// serve
+	log.Fatal(http.ListenAndServe(servePath, router))
 }
