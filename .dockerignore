@@ -1,0 +1,4 @@
+database.json
+go.sum
+.*
+Dockerfile
