@@ -8,5 +8,5 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /go/src/github.com/eviofragoso/go_shortener/go_shortener .
-RUN echo '{}' > database.json
+RUN echo '{}' > ${DB_NAME}
 CMD ["./go_shortener"]
